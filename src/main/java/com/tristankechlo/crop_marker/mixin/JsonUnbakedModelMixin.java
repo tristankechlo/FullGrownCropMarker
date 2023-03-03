@@ -35,9 +35,11 @@ public abstract class JsonUnbakedModelMixin {
     private void FullGrownCropMarker$bake(Baker baker, JsonUnbakedModel parent, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings settings, Identifier id, boolean hasDepth, CallbackInfoReturnable<BakedModel> cir) {
         MarkerPosition marker = MarkerPosition.fromId(id);
         if (marker != MarkerPosition.NONE) {
-            //FIXME texture for the marker is correct, but the texture for the crop is not rendered
+            List<ModelElement> all = ((JsonUnbakedModel) (Object) this).getElements(); //get the original elements, or the elements of the parent model
+            elements.clear();
+            elements.addAll(all); //add the original elements to the model
             textureMap.put("marker", FULL_GROWN_CROP_MARKER_SPRITE);
-            elements.addAll(FullGrownCropMarker$createMarker());
+            elements.addAll(FullGrownCropMarker$createMarker()); //add the marker elements to the model
             FullGrownCropMarker.LOGGER.info("Added the marker element to the model '{}' at position '{}'", id, marker);
         }
     }
