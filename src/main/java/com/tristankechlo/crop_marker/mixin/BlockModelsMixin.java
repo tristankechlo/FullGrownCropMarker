@@ -1,7 +1,7 @@
 package com.tristankechlo.crop_marker.mixin;
 
-import com.tristankechlo.crop_marker.util.MarkerPosition;
 import com.tristankechlo.crop_marker.util.IdentifierHelper;
+import com.tristankechlo.crop_marker.util.MarkerPosition;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
@@ -20,15 +20,16 @@ public abstract class BlockModelsMixin {
             method = "getModelId(Lnet/minecraft/util/Identifier;Lnet/minecraft/block/BlockState;)Lnet/minecraft/client/util/ModelIdentifier;")
     private static void FullGrownCropMarker$getModelId(Identifier id, BlockState state, CallbackInfoReturnable<ModelIdentifier> cir) {
         Block block = state.getBlock();
-        if (FullGrownCropMarker$isCropBlock(block) && FullGrownCropMarker$isMaxAge((CropBlock) block, state)) {
-            ModelIdentifier modelIdentifier = cir.getReturnValue();
-            ((IdentifierHelper) modelIdentifier).FullGrownCropMarker$setMarkerPosition(MarkerPosition.TOP);
-        }
+        MarkerPosition markerPosition = FullGrownCropMarker$getMarkerPosition(block, state);
+        ModelIdentifier modelIdentifier = cir.getReturnValue();
+        ((IdentifierHelper) modelIdentifier).FullGrownCropMarker$setMarkerPosition(markerPosition);
     }
 
-    //whether or not the block should have the marker in general (correct type of block)
-    private static boolean FullGrownCropMarker$isCropBlock(Block block) {
-        return block instanceof CropBlock; //TODO handle other crop blocks
+    private static MarkerPosition FullGrownCropMarker$getMarkerPosition(Block block, BlockState state) {
+        if (block instanceof CropBlock) {
+            return FullGrownCropMarker$isMaxAge((CropBlock) block, state) ? MarkerPosition.TOP : MarkerPosition.NONE;
+        } //TODO handle other blocks
+        return MarkerPosition.NONE;
     }
 
     //whether or not the blockstate is for the max age, and therefore should have the marker
