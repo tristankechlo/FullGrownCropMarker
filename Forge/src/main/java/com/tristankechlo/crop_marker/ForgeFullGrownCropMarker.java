@@ -1,6 +1,9 @@
 package com.tristankechlo.crop_marker;
 
+import com.tristankechlo.crop_marker.commands.CropMarkerCommand;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterClientCommandsEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 
@@ -8,11 +11,21 @@ import net.minecraftforge.fml.common.Mod;
 public final class ForgeFullGrownCropMarker {
 
     public ForgeFullGrownCropMarker() {
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> FullGrownCropMarker::init);
-        DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> ForgeFullGrownCropMarker::onServerStarting);
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> this::onClientStarting);
+        DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> this::onServerStarting);
     }
 
-    private static void onServerStarting() {
+    private void onClientStarting() {
+        FullGrownCropMarker.init();
+
+        MinecraftForge.EVENT_BUS.addListener(this::onClientCommands);
+    }
+
+    private void onClientCommands(RegisterClientCommandsEvent event) {
+        CropMarkerCommand.register(event.getDispatcher());
+    }
+
+    private void onServerStarting() {
         // ascii art of the word WARNING
         FullGrownCropMarker.LOGGER.warn("============================================================");
         FullGrownCropMarker.LOGGER.warn("__          __       _____   _   _  _____  _   _   _____ ");
