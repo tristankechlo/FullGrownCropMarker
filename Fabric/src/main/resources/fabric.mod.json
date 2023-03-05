@@ -23,10 +23,6 @@
         {
             "config": "crop_marker.mixins.json",
             "environment": "client"
-        },
-        {
-            "config": "crop_marker.fabric.mixins.json",
-            "environment": "server"
         }
     ],
     "depends": {
