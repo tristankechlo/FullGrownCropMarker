@@ -23,6 +23,7 @@ TODO
     - `minecraft:carrots`
     - `minecraft:potatoes`
     - `minecraft:beetroots`
+    - `minecraft:nether_wart`
 - Modded:
     - all crops that extend `net.minecraft.block.CropsBlock`
 

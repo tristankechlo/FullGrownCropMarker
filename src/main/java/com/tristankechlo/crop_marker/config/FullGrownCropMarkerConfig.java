@@ -54,9 +54,10 @@ public final class FullGrownCropMarkerConfig {
     private static Map<Identifier, MarkerOptions> createOptions() {
         Map<Identifier, MarkerOptions> options = new HashMap<>();
         options.put(getID("wheat_stage7"), new MarkerOptions(1, false, MarkerPosition.TOP, MarkerColor.YELLOW));
-        options.put(getID("carrots_stage3"), new MarkerOptions(-2, true, MarkerPosition.TOP, MarkerColor.ORANGE));
-        options.put(getID("beetroots_stage3"), new MarkerOptions(-4, true, MarkerPosition.TOP, MarkerColor.RED));
-        options.put(getID("potatoes_stage3"), new MarkerOptions(1, true, MarkerPosition.TOP, MarkerColor.GREEN));
+        options.put(getID("carrots_stage3"), new MarkerOptions(-2, false, MarkerPosition.TOP, MarkerColor.ORANGE));
+        options.put(getID("beetroots_stage3"), new MarkerOptions(-4, false, MarkerPosition.TOP, MarkerColor.RED));
+        options.put(getID("potatoes_stage3"), new MarkerOptions(1, false, MarkerPosition.TOP, MarkerColor.GREEN));
+        options.put(getID("nether_wart_stage2"), new MarkerOptions(-1, false, MarkerPosition.TOP, MarkerColor.RED));
         return options;
     }
 

@@ -1,12 +1,14 @@
 package com.tristankechlo.crop_marker.mixin;
 
-import com.tristankechlo.crop_marker.util.IdentifierHelper;
 import com.tristankechlo.crop_marker.types.MarkerPosition;
+import com.tristankechlo.crop_marker.util.IdentifierHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
+import net.minecraft.block.NetherWartBlock;
 import net.minecraft.client.render.block.BlockModels;
 import net.minecraft.client.util.ModelIdentifier;
+import net.minecraft.state.property.Property;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,14 +29,20 @@ public abstract class BlockModelsMixin {
 
     private static MarkerPosition FullGrownCropMarker$getMarkerPosition(Block block, BlockState state) {
         if (block instanceof CropBlock) {
-            return FullGrownCropMarker$isMaxAge((CropBlock) block, state) ? MarkerPosition.TOP : MarkerPosition.NONE;
-        } //TODO handle other blocks
+            return FullGrownCropMarker$checkCropBlock((CropBlock) block, state) ? MarkerPosition.TOP : MarkerPosition.NONE;
+        } else if (block instanceof NetherWartBlock) {
+            return FullGrownCropMarker$isMaxAge(state, NetherWartBlock.AGE, NetherWartBlock.field_31199) ? MarkerPosition.TOP : MarkerPosition.NONE;
+        }
+        //TODO handle other blocks
         return MarkerPosition.NONE;
     }
 
-    //whether or not the blockstate is for the max age, and therefore should have the marker
-    private static boolean FullGrownCropMarker$isMaxAge(CropBlock block, BlockState state) {
+    private static boolean FullGrownCropMarker$checkCropBlock(CropBlock block, BlockState state) {
         return state.get(block.getAgeProperty()) == block.getMaxAge();
+    }
+
+    private static boolean FullGrownCropMarker$isMaxAge(BlockState state, Property<Integer> property, int maxAge) {
+        return state.get(property) == maxAge;
     }
 
 }

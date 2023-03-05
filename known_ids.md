@@ -8,6 +8,7 @@ The following ID's can be used in the config file to configure the marker option
 - `minecraft:carrots` => `minecraft:block/carrots_stage3`
 - `minecraft:potatoes` => `minecraft:block/potatoes_stage3`
 - `minecraft:beetroots` => `minecraft:block/beetroots_stage3`
+- `minecraft:nether_wart` => `minecraft:block/nether_wart_stage2`
 
 ## Modded
 
