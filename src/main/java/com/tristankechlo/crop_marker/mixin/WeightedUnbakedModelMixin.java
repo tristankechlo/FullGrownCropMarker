@@ -1,7 +1,7 @@
 package com.tristankechlo.crop_marker.mixin;
 
 import com.tristankechlo.crop_marker.util.IdentifierHelper;
-import com.tristankechlo.crop_marker.util.MarkerPosition;
+import com.tristankechlo.crop_marker.types.MarkerPosition;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.Baker;
 import net.minecraft.client.render.model.ModelBakeSettings;

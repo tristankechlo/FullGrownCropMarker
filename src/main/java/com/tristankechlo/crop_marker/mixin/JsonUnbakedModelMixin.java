@@ -2,7 +2,10 @@ package com.tristankechlo.crop_marker.mixin;
 
 import com.mojang.datafixers.util.Either;
 import com.tristankechlo.crop_marker.FullGrownCropMarker;
-import com.tristankechlo.crop_marker.util.MarkerPosition;
+import com.tristankechlo.crop_marker.config.FullGrownCropMarkerConfig;
+import com.tristankechlo.crop_marker.types.MarkerColor;
+import com.tristankechlo.crop_marker.types.MarkerOptions;
+import com.tristankechlo.crop_marker.types.MarkerPosition;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.Baker;
 import net.minecraft.client.render.model.ModelBakeSettings;
@@ -39,28 +42,37 @@ public abstract class JsonUnbakedModelMixin {
             elements.clear();
             elements.addAll(all); //add the original elements to the model
             textureMap.put("marker", FULL_GROWN_CROP_MARKER_SPRITE);
-            elements.addAll(FullGrownCropMarker$createMarker()); //add the marker elements to the model
-            FullGrownCropMarker.LOGGER.info("Added the marker element to the model '{}' at position '{}'", id, marker);
+            MarkerOptions options = FullGrownCropMarkerConfig.getOptions(id);
+            elements.addAll(FullGrownCropMarker$createMarkerTop(options)); //add the marker elements to the model
+            FullGrownCropMarker.LOGGER.info("Added the marker to '{}' with {}", id, options);
         }
     }
 
     //create the ModelElements needed for the marker
-    private static List<ModelElement> FullGrownCropMarker$createMarker() {
-        final float[] uvsSmall = new float[]{2, 0, 4, 2};
-        final float[] uvsLarge = new float[]{0, 0, 2, 5};
+    private static List<ModelElement> FullGrownCropMarker$createMarkerTop(MarkerOptions options) {
+        final float[] uvsSmall = options.color().getUvsSmall();
+        final float[] uvsLarge = options.color().getUvsLarge();
+        final MarkerPosition position = options.position();
+        final int yOffset = options.yOffset() + position.getOffset().y();
+        final boolean animated = options.animated();
+
         final ModelElementFace faceSmall = new ModelElementFace(Direction.UP, 0, "#marker", new ModelElementTexture(uvsSmall, 0));
         final ModelElementFace faceLarge = new ModelElementFace(Direction.UP, 0, "#marker", new ModelElementTexture(uvsLarge, 0));
         final ModelRotation rotation = new ModelRotation(new Vector3f(0, 0, 0), Direction.Axis.Y, 0, false);
 
         Map<Direction, ModelElementFace> facesCube = Direction.stream().collect(HashMap::new, (map, dir) -> map.put(dir, faceSmall), HashMap::putAll);
-        ModelElement smallCube = new ModelElement(new Vector3f(7, 15, 7), new Vector3f(9, 17, 9), facesCube, rotation, false);
+        Vector3f fromSmall = new Vector3f(7, 1, 7).add(0, yOffset, 0);
+        Vector3f toSmall = new Vector3f(9, 3, 9).add(0, yOffset, 0);
+        ModelElement smallCube = new ModelElement(fromSmall, toSmall, facesCube, rotation, false);
 
         Map<Direction, ModelElementFace> facesCuboidTop = Direction.stream()
                 .filter(dir -> dir.getAxis().isHorizontal())
                 .collect(HashMap::new, (map, dir) -> map.put(dir, faceLarge), HashMap::putAll);
         facesCuboidTop.put(Direction.UP, faceSmall);
         facesCuboidTop.put(Direction.DOWN, faceSmall);
-        ModelElement cuboidTop = new ModelElement(new Vector3f(7, 18, 7), new Vector3f(9, 23, 9), facesCuboidTop, rotation, false);
+        Vector3f fromLarge = new Vector3f(7, 4, 7).add(0, yOffset, 0);
+        Vector3f toLarge = new Vector3f(9, 9, 9).add(0, yOffset, 0);
+        ModelElement cuboidTop = new ModelElement(fromLarge, toLarge, facesCuboidTop, rotation, false);
 
         return List.of(smallCube, cuboidTop);
     }

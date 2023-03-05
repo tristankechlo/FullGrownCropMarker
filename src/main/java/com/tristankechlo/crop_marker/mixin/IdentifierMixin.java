@@ -1,7 +1,7 @@
 package com.tristankechlo.crop_marker.mixin;
 
 import com.tristankechlo.crop_marker.util.IdentifierHelper;
-import com.tristankechlo.crop_marker.util.MarkerPosition;
+import com.tristankechlo.crop_marker.types.MarkerPosition;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 
