@@ -13,7 +13,18 @@ public final class ForgeFullGrownCropMarker {
     }
 
     private static void onServerStarting() {
-        //TODO log that the mod is loaded on the server
+        // ascii art of the word WARNING
+        FullGrownCropMarker.LOGGER.warn("============================================================");
+        FullGrownCropMarker.LOGGER.warn("__          __       _____   _   _  _____  _   _   _____ ");
+        FullGrownCropMarker.LOGGER.warn("\\ \\        / //\\    |  __ \\ | \\ | ||_   _|| \\ | | / ____|");
+        FullGrownCropMarker.LOGGER.warn(" \\ \\  /\\  / //  \\   | |__) ||  \\| |  | |  |  \\| || |  __ ");
+        FullGrownCropMarker.LOGGER.warn("  \\ \\/  \\/ // /\\ \\  |  _  / | . ` |  | |  | . ` || | |_ |");
+        FullGrownCropMarker.LOGGER.warn("   \\  /\\  // ____ \\ | | \\ \\ | |\\  | _| |_ | |\\  || |__| |");
+        FullGrownCropMarker.LOGGER.warn("    \\/  \\//_/    \\_\\|_|  \\_\\|_| \\_||_____||_| \\_| \\_____|");
+        FullGrownCropMarker.LOGGER.warn("============================================================");
+        FullGrownCropMarker.LOGGER.warn("FullGrownCropMarker is a client-side mod!");
+        FullGrownCropMarker.LOGGER.warn("Consider removing it from your server, as it does absolutely nothing here!");
+        FullGrownCropMarker.LOGGER.warn("============================================================");
     }
 
 }
