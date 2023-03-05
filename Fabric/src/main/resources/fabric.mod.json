@@ -1,0 +1,38 @@
+{
+    "schemaVersion": 1,
+    "id": "crop_marker",
+    "version": "${version}",
+    "name": "FullGrownCropMarker",
+    "description": "Adds a little marker over all crops that are at their maximum age!",
+    "authors": [
+        "Buecher_wurm"
+    ],
+    "contact": {
+        "sources": "https://github.com/tristankechlo/FullGrownCropMarker",
+        "issues": "https://github.com/tristankechlo/FullGrownCropMarker/issues"
+    },
+    "license": "CC BY-NC-ND 4.0",
+    "icon": "assets/crop_marker/icon.png",
+    "environment": "client",
+    "entrypoints": {
+        "client": [
+            "com.tristankechlo.crop_marker.FabricFullGrownCropMarker"
+        ]
+    },
+    "mixins": [
+        {
+            "config": "crop_marker.mixins.json",
+            "environment": "client"
+        },
+        {
+            "config": "crop_marker.fabric.mixins.json",
+            "environment": "server"
+        }
+    ],
+    "depends": {
+        "fabricloader": ">=0.14",
+        "fabric-api": "*",
+        "minecraft": ">=1.19.3",
+        "java": ">=17"
+    }
+}
