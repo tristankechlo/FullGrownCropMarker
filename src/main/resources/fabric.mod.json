@@ -8,21 +8,25 @@
         "Buecher_wurm"
     ],
     "contact": {
-        "homepage": "https://github.com/tristankechlo/"
+        "sources": "https://github.com/tristankechlo/FullGrownCropMarker",
+        "issues": "https://github.com/tristankechlo/FullGrownCropMarker/issues"
     },
     "license": "CC BY-NC-ND 4.0",
     "icon": "assets/crop_marker/icon.png",
     "environment": "client",
     "entrypoints": {
-        "main": [
+        "client": [
             "com.tristankechlo.crop_marker.FullGrownCropMarker"
         ]
     },
     "mixins": [
-        "crop_marker.mixins.json"
+        {
+            "config": "crop_marker.mixins.json",
+            "environment": "client"
+        }
     ],
     "depends": {
-        "fabricloader": ">=0.14.14",
+        "fabricloader": ">=0.14",
         "fabric-api": "*",
         "minecraft": ">=1.19.3",
         "java": ">=17"

@@ -3,7 +3,6 @@ package com.tristankechlo.crop_marker.mixin;
 import com.mojang.datafixers.util.Either;
 import com.tristankechlo.crop_marker.FullGrownCropMarker;
 import com.tristankechlo.crop_marker.config.FullGrownCropMarkerConfig;
-import com.tristankechlo.crop_marker.types.MarkerColor;
 import com.tristankechlo.crop_marker.types.MarkerOptions;
 import com.tristankechlo.crop_marker.types.MarkerPosition;
 import net.minecraft.client.render.model.BakedModel;
