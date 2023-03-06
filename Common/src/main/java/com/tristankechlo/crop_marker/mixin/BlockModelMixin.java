@@ -1,6 +1,7 @@
 package com.tristankechlo.crop_marker.mixin;
 
 import com.mojang.datafixers.util.Either;
+import com.mojang.math.Vector3f;
 import com.tristankechlo.crop_marker.FullGrownCropMarker;
 import com.tristankechlo.crop_marker.config.FullGrownCropMarkerConfig;
 import com.tristankechlo.crop_marker.types.MarkerOptions;
@@ -9,12 +10,11 @@ import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.Material;
-import net.minecraft.client.resources.model.ModelBaker;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
-import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -33,8 +33,8 @@ public abstract class BlockModelMixin {
     private static final ResourceLocation FULL_GROWN_CROP_MARKER_TEXTURE = new ResourceLocation(FullGrownCropMarker.MOD_ID, "block/marker");
     private static final Either<Material, String> FULL_GROWN_CROP_MARKER_SPRITE = Either.left(new Material(InventoryMenu.BLOCK_ATLAS, FULL_GROWN_CROP_MARKER_TEXTURE));
 
-    @Inject(at = @At("HEAD"), method = "bake(Lnet/minecraft/client/resources/model/ModelBaker;Lnet/minecraft/client/renderer/block/model/BlockModel;Ljava/util/function/Function;Lnet/minecraft/client/resources/model/ModelState;Lnet/minecraft/resources/ResourceLocation;Z)Lnet/minecraft/client/resources/model/BakedModel;")
-    private void FullGrownCropMarker$bake(ModelBaker $$0, BlockModel $$1, Function<Material, TextureAtlasSprite> $$2, ModelState $$3, ResourceLocation id, boolean $$5, CallbackInfoReturnable<BakedModel> cir) {
+    @Inject(at = @At("HEAD"), method = "bake(Lnet/minecraft/client/resources/model/ModelBakery;Lnet/minecraft/client/renderer/block/model/BlockModel;Ljava/util/function/Function;Lnet/minecraft/client/resources/model/ModelState;Lnet/minecraft/resources/ResourceLocation;Z)Lnet/minecraft/client/resources/model/BakedModel;")
+    private void FullGrownCropMarker$bake(ModelBakery $$0, BlockModel $$1, Function<Material, TextureAtlasSprite> $$2, ModelState $$3, ResourceLocation id, boolean $$5, CallbackInfoReturnable<BakedModel> cir) {
         MarkerPosition marker = MarkerPosition.fromId(id);
         if (marker != MarkerPosition.NONE) {
             List<BlockElement> all = ((BlockModel) (Object) this).getElements(); //get the original elements, or the elements of the parent model
@@ -52,7 +52,7 @@ public abstract class BlockModelMixin {
         final float[] uvsSmall = options.color().getUvsSmall();
         final float[] uvsLarge = options.color().getUvsLarge();
         final MarkerPosition position = options.position();
-        final int yOffset = options.yOffset() + position.getOffset().y();
+        final int yOffset = options.yOffset() + position.getYOffset();
         final boolean animated = options.animated();
 
         final BlockElementFace faceSmall = new BlockElementFace(Direction.UP, 0, "#marker", new BlockFaceUV(uvsSmall, 0));
@@ -60,8 +60,8 @@ public abstract class BlockModelMixin {
         final BlockElementRotation rotation = new BlockElementRotation(new Vector3f(0, 0, 0), Direction.Axis.Y, 0, false);
 
         Map<Direction, BlockElementFace> facesCube = Direction.stream().collect(HashMap::new, (map, dir) -> map.put(dir, faceSmall), HashMap::putAll);
-        Vector3f fromSmall = new Vector3f(7, 1, 7).add(0, yOffset, 0);
-        Vector3f toSmall = new Vector3f(9, 3, 9).add(0, yOffset, 0);
+        Vector3f fromSmall = new Vector3f(7, 1 + yOffset, 7);
+        Vector3f toSmall = new Vector3f(9, 3 + yOffset, 9);
         BlockElement smallCube = new BlockElement(fromSmall, toSmall, facesCube, rotation, false);
 
         Map<Direction, BlockElementFace> facesCuboidTop = Direction.stream()
@@ -69,8 +69,8 @@ public abstract class BlockModelMixin {
                 .collect(HashMap::new, (map, dir) -> map.put(dir, faceLarge), HashMap::putAll);
         facesCuboidTop.put(Direction.UP, faceSmall);
         facesCuboidTop.put(Direction.DOWN, faceSmall);
-        Vector3f fromLarge = new Vector3f(7, 4, 7).add(0, yOffset, 0);
-        Vector3f toLarge = new Vector3f(9, 9, 9).add(0, yOffset, 0);
+        Vector3f fromLarge = new Vector3f(7, 4 + yOffset, 7);
+        Vector3f toLarge = new Vector3f(9, 9 + yOffset, 9);
         BlockElement cuboidTop = new BlockElement(fromLarge, toLarge, facesCuboidTop, rotation, false);
 
         return List.of(smallCube, cuboidTop);

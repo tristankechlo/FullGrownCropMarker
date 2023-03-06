@@ -41,7 +41,8 @@ public enum MarkerColor implements StringRepresentable {
     }
 
     public static MarkerColor fromString(String string) {
-        return CODEC.byName(string, GREEN);
+        MarkerColor color = CODEC.byName(string);
+        return color == null ? GREEN : color;
     }
 
     static {

@@ -3,24 +3,31 @@ package com.tristankechlo.crop_marker.types;
 import com.tristankechlo.crop_marker.util.ResourceLocationHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
-import org.joml.Vector3i;
 
 public enum MarkerPosition implements StringRepresentable {
 
-    NONE(new Vector3i(0)),
-    TOP(new Vector3i(0, 16, 0));
+    NONE(0),
+    TOP(0, 16, 0);
 
-    private final Vector3i offset;
+    private final int xOffset;
+    private final int yOffset;
+    private final int zOffset;
     private final String name;
     private static final StringRepresentable.EnumCodec<MarkerPosition> CODEC;
 
-    MarkerPosition(Vector3i offset) {
-        this.offset = offset;
+    MarkerPosition(int offset) {
+        this(offset, offset, offset);
+    }
+
+    MarkerPosition(int xOffset, int yOffset, int zOffset) {
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
+        this.zOffset = zOffset;
         this.name = this.name().toLowerCase();
     }
 
-    public Vector3i getOffset() {
-        return offset;
+    public int getYOffset() {
+        return yOffset;
     }
 
     public static MarkerPosition fromId(ResourceLocation id) {
@@ -41,7 +48,8 @@ public enum MarkerPosition implements StringRepresentable {
     }
 
     public static MarkerPosition fromString(String string) {
-        return CODEC.byName(string, NONE);
+        MarkerPosition position = CODEC.byName(string);
+        return position == null ? NONE : position;
     }
 
     static {
