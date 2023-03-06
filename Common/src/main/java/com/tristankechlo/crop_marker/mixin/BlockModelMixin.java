@@ -6,6 +6,7 @@ import com.tristankechlo.crop_marker.FullGrownCropMarker;
 import com.tristankechlo.crop_marker.config.FullGrownCropMarkerConfig;
 import com.tristankechlo.crop_marker.types.MarkerOptions;
 import com.tristankechlo.crop_marker.types.MarkerPosition;
+import com.tristankechlo.crop_marker.util.ResourceLocationHelper;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
@@ -14,7 +15,6 @@ import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.InventoryMenu;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,8 +30,7 @@ import java.util.function.Function;
 @Mixin(BlockModel.class)
 public abstract class BlockModelMixin {
 
-    private static final ResourceLocation FULL_GROWN_CROP_MARKER_TEXTURE = new ResourceLocation(FullGrownCropMarker.MOD_ID, "block/marker");
-    private static final Either<Material, String> FULL_GROWN_CROP_MARKER_SPRITE = Either.left(new Material(InventoryMenu.BLOCK_ATLAS, FULL_GROWN_CROP_MARKER_TEXTURE));
+    private static final Either<Material, String> FULL_GROWN_CROP_MARKER_SPRITE = Either.left(ResourceLocationHelper.MATERIAL);
 
     @Inject(at = @At("HEAD"), method = "bake(Lnet/minecraft/client/resources/model/ModelBakery;Lnet/minecraft/client/renderer/block/model/BlockModel;Ljava/util/function/Function;Lnet/minecraft/client/resources/model/ModelState;Lnet/minecraft/resources/ResourceLocation;Z)Lnet/minecraft/client/resources/model/BakedModel;")
     private void FullGrownCropMarker$bake(ModelBakery $$0, BlockModel $$1, Function<Material, TextureAtlasSprite> $$2, ModelState $$3, ResourceLocation id, boolean $$5, CallbackInfoReturnable<BakedModel> cir) {

@@ -9,6 +9,7 @@
     "client": [
         "BlockModelMixin",
         "BlockModelShaperMixin",
+        "SheetsMixin",
         "MultiVariantMixin"
     ],
     "server": [
