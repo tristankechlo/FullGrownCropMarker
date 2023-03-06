@@ -14,7 +14,7 @@ Adds a little marker over all crops that are at their maximum age!
 
 ## Screenshots
 
-TODO
+![FullGrownCropMarker](https://i.ibb.co/gD7GDSB/Full-Grown-Crop-Marker.png)
 
 ## Supported Crops
 
