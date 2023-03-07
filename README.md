@@ -25,7 +25,7 @@ Adds a little marker over all crops that are at their maximum age!
     - `minecraft:beetroots`
     - `minecraft:nether_wart`
 - Modded:
-    - all crops that extend `net.minecraft.block.CropsBlock`
+    - all crops that extend `net.minecraft.world.level.block.CropsBlock`
 
 ### Credits
 
