@@ -1,4 +1,4 @@
-# Full Grown Crop Marker
+# Full Grown Crop Marker [![Curseforge](http://cf.way2muchnoise.eu/full_834457_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/explorations) [![Discord](https://img.shields.io/discord/639540436524072970?color=0a48c4&label=%20&logo=discord&logoColor=FFF)](https://discord.gg/bhUaWhq)
 
 Adds a little marker over all crops that are at their maximum age!
 
