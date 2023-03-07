@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.NetherWartBlock;
+import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,8 +31,13 @@ public abstract class BlockModelShaperMixin {
     private static MarkerPosition FullGrownCropMarker$getMarkerPosition(Block block, BlockState state) {
         if (block instanceof CropBlock) {
             return FullGrownCropMarker$checkCropBlock((CropBlock) block, state) ? MarkerPosition.TOP : MarkerPosition.NONE;
-        } else if (block instanceof NetherWartBlock) {
+        }
+        if (block instanceof NetherWartBlock) {
             return FullGrownCropMarker$isMaxAge(state, NetherWartBlock.AGE, NetherWartBlock.MAX_AGE) ? MarkerPosition.TOP : MarkerPosition.NONE;
+        }
+        if (block instanceof SweetBerryBushBlock) {
+            int age = state.getValue(SweetBerryBushBlock.AGE);
+            return age > 1 ? MarkerPosition.TOP : MarkerPosition.NONE;
         }
         //TODO handle other blocks
         return MarkerPosition.NONE;

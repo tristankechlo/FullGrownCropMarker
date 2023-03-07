@@ -58,6 +58,8 @@ public final class FullGrownCropMarkerConfig {
         options.put(getID("beetroots_stage3"), new MarkerOptions(-4, false, MarkerPosition.TOP, MarkerColor.RED));
         options.put(getID("potatoes_stage3"), new MarkerOptions(1, false, MarkerPosition.TOP, MarkerColor.GREEN));
         options.put(getID("nether_wart_stage2"), new MarkerOptions(-1, false, MarkerPosition.TOP, MarkerColor.RED));
+        options.put(getID("sweet_berry_bush_stage2"), new MarkerOptions(2, false, MarkerPosition.TOP, MarkerColor.GREEN));
+        options.put(getID("sweet_berry_bush_stage3"), new MarkerOptions(2, false, MarkerPosition.TOP, MarkerColor.RED));
         return options;
     }
 
