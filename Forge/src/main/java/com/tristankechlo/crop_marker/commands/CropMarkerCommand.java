@@ -8,6 +8,7 @@ import com.tristankechlo.crop_marker.config.ConfigManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 import static net.minecraft.commands.Commands.literal;
 
@@ -52,7 +53,7 @@ public final class CropMarkerCommand {
     private static int github(CommandContext<CommandSourceStack> context) {
         CommandSourceStack source = context.getSource();
         Component link = ResponseHelper.clickableLink(FullGrownCropMarker.GITHUB_URL);
-        Component message = Component.literal("Check out the source code on GitHub: ").withStyle(ChatFormatting.WHITE).append(link);
+        Component message = new TextComponent("Check out the source code on GitHub: ").withStyle(ChatFormatting.WHITE).append(link);
         ResponseHelper.sendMessage(source, message);
         return 1;
     }
@@ -60,7 +61,7 @@ public final class CropMarkerCommand {
     private static int issue(CommandContext<CommandSourceStack> context) {
         CommandSourceStack source = context.getSource();
         Component link = ResponseHelper.clickableLink(FullGrownCropMarker.GITHUB_ISSUE_URL);
-        Component message = Component.literal("If you found an issue, submit it here: ").withStyle(ChatFormatting.WHITE).append(link);
+        Component message = new TextComponent("If you found an issue, submit it here: ").withStyle(ChatFormatting.WHITE).append(link);
         ResponseHelper.sendMessage(source, message);
         return 1;
     }
@@ -68,7 +69,7 @@ public final class CropMarkerCommand {
     private static int wiki(CommandContext<CommandSourceStack> context) {
         CommandSourceStack source = context.getSource();
         Component link = ResponseHelper.clickableLink(FullGrownCropMarker.GITHUB_WIKI_URL);
-        Component message = Component.literal("The wiki can be found here: ").withStyle(ChatFormatting.WHITE).append(link);
+        Component message = new TextComponent("The wiki can be found here: ").withStyle(ChatFormatting.WHITE).append(link);
         ResponseHelper.sendMessage(source, message);
         return 1;
     }
@@ -76,7 +77,7 @@ public final class CropMarkerCommand {
     private static int discord(CommandContext<CommandSourceStack> context) {
         CommandSourceStack source = context.getSource();
         Component link = ResponseHelper.clickableLink(FullGrownCropMarker.DISCORD_URL);
-        Component message = Component.literal("Join the Discord here: ").withStyle(ChatFormatting.WHITE).append(link);
+        Component message = new TextComponent("Join the Discord here: ").withStyle(ChatFormatting.WHITE).append(link);
         ResponseHelper.sendMessage(source, message);
         return 1;
     }
@@ -84,7 +85,7 @@ public final class CropMarkerCommand {
     private static int curseforge(CommandContext<CommandSourceStack> context) {
         CommandSourceStack source = context.getSource();
         Component link = ResponseHelper.clickableLink(FullGrownCropMarker.CURSEFORGE_URL);
-        Component message = Component.literal("Check out the CurseForge page here: ").withStyle(ChatFormatting.WHITE).append(link);
+        Component message = new TextComponent("Check out the CurseForge page here: ").withStyle(ChatFormatting.WHITE).append(link);
         ResponseHelper.sendMessage(source, message);
         return 1;
     }
@@ -92,7 +93,7 @@ public final class CropMarkerCommand {
     private static int modrinth(CommandContext<CommandSourceStack> context) {
         CommandSourceStack source = context.getSource();
         Component link = ResponseHelper.clickableLink(FullGrownCropMarker.MODRINTH_URL);
-        Component message = Component.literal("Check out the Modrinth page here: ").withStyle(ChatFormatting.WHITE).append(link);
+        Component message = new TextComponent("Check out the Modrinth page here: ").withStyle(ChatFormatting.WHITE).append(link);
         ResponseHelper.sendMessage(source, message);
         return 1;
     }

@@ -4,6 +4,10 @@ import com.tristankechlo.crop_marker.util.ResourceLocationHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public enum MarkerPosition implements StringRepresentable {
 
     NONE(0),
@@ -13,7 +17,8 @@ public enum MarkerPosition implements StringRepresentable {
     private final int yOffset;
     private final int zOffset;
     private final String name;
-    private static final StringRepresentable.EnumCodec<MarkerPosition> CODEC;
+    private static final MarkerPosition[] VALUES = values();
+    private static final Map<String, MarkerPosition> CODEC = Arrays.stream(VALUES).collect(Collectors.toMap(MarkerPosition::toString, ($$0) -> $$0));
 
     MarkerPosition(int offset) {
         this(offset, offset, offset);
@@ -48,12 +53,8 @@ public enum MarkerPosition implements StringRepresentable {
     }
 
     public static MarkerPosition fromString(String string) {
-        MarkerPosition position = CODEC.byName(string);
+        MarkerPosition position = CODEC.get(string);
         return position == null ? NONE : position;
-    }
-
-    static {
-        CODEC = StringRepresentable.fromEnum(MarkerPosition::values);
     }
 
 }

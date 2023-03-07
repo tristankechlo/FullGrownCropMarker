@@ -2,6 +2,10 @@ package com.tristankechlo.crop_marker.types;
 
 import net.minecraft.util.StringRepresentable;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public enum MarkerColor implements StringRepresentable {
 
     RED("red", 2, 10, 0, 10),
@@ -14,7 +18,8 @@ public enum MarkerColor implements StringRepresentable {
     private final String name;
     private final float[] uvsSmall;
     private final float[] uvsLarge;
-    private static final StringRepresentable.EnumCodec<MarkerColor> CODEC;
+    private static final MarkerColor[] VALUES = values();
+    private static final Map<String, MarkerColor> CODEC = Arrays.stream(VALUES).collect(Collectors.toMap(MarkerColor::toString, ($$0) -> $$0));
 
     MarkerColor(String name, float x1, float y1, float x2, float y2) {
         this.name = name;
@@ -41,12 +46,8 @@ public enum MarkerColor implements StringRepresentable {
     }
 
     public static MarkerColor fromString(String string) {
-        MarkerColor color = CODEC.byName(string);
+        MarkerColor color = CODEC.get(string);
         return color == null ? GREEN : color;
-    }
-
-    static {
-        CODEC = StringRepresentable.fromEnum(MarkerColor::values);
     }
 
 }

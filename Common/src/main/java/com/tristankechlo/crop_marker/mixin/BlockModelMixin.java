@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,12 +59,12 @@ public abstract class BlockModelMixin {
         final BlockElementFace faceLarge = new BlockElementFace(Direction.UP, 0, "#marker", new BlockFaceUV(uvsLarge, 0));
         final BlockElementRotation rotation = new BlockElementRotation(new Vector3f(0, 0, 0), Direction.Axis.Y, 0, false);
 
-        Map<Direction, BlockElementFace> facesCube = Direction.stream().collect(HashMap::new, (map, dir) -> map.put(dir, faceSmall), HashMap::putAll);
+        Map<Direction, BlockElementFace> facesCube = Arrays.stream(Direction.values()).collect(HashMap::new, (map, dir) -> map.put(dir, faceSmall), HashMap::putAll);
         Vector3f fromSmall = new Vector3f(7, 1 + yOffset, 7);
         Vector3f toSmall = new Vector3f(9, 3 + yOffset, 9);
         BlockElement smallCube = new BlockElement(fromSmall, toSmall, facesCube, rotation, false);
 
-        Map<Direction, BlockElementFace> facesCuboidTop = Direction.stream()
+        Map<Direction, BlockElementFace> facesCuboidTop = Arrays.stream(Direction.values())
                 .filter(dir -> dir.getAxis().isHorizontal())
                 .collect(HashMap::new, (map, dir) -> map.put(dir, faceLarge), HashMap::putAll);
         facesCuboidTop.put(Direction.UP, faceSmall);
