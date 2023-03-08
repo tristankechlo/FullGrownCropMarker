@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.19.3 - 1.2.0
+
+- fix invisible vanilla crops when using custom crop-models
+
 ### Version 1.19.3 - 1.1.0
 
 - add support for `minecraft:sweet_berry_bush`

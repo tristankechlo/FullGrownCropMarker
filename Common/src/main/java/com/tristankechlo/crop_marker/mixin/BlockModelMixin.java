@@ -32,22 +32,24 @@ public abstract class BlockModelMixin {
 
     private static final ResourceLocation FULL_GROWN_CROP_MARKER_TEXTURE = new ResourceLocation(FullGrownCropMarker.MOD_ID, "block/marker");
     private static final Either<Material, String> FULL_GROWN_CROP_MARKER_SPRITE = Either.left(new Material(InventoryMenu.BLOCK_ATLAS, FULL_GROWN_CROP_MARKER_TEXTURE));
+    private boolean FullGrownCropMarker$alreadyHasMarker = false; // sometimes multiple states use the same model, prevent adding marker multiple times
 
     @Inject(at = @At("HEAD"), method = "bake(Lnet/minecraft/client/resources/model/ModelBaker;Lnet/minecraft/client/renderer/block/model/BlockModel;Ljava/util/function/Function;Lnet/minecraft/client/resources/model/ModelState;Lnet/minecraft/resources/ResourceLocation;Z)Lnet/minecraft/client/resources/model/BakedModel;")
     private void FullGrownCropMarker$bake(ModelBaker $$0, BlockModel $$1, Function<Material, TextureAtlasSprite> $$2, ModelState $$3, ResourceLocation id, boolean $$5, CallbackInfoReturnable<BakedModel> cir) {
         boolean shouldHaveMarker = ResourceLocationHelper.FullGrownCropMarker$shouldHaveMarker(id);
-        if (shouldHaveMarker) {
+        if (shouldHaveMarker && !this.FullGrownCropMarker$alreadyHasMarker) {
             MarkerOptions options = FullGrownCropMarkerConfig.getOptions(id);
             if (!options.hasMarker()) {
                 FullGrownCropMarker.LOGGER.info("Skipped adding the marker to '{}' with {}", id, options);
                 return;
             }
-            List<BlockElement> all = this.getElements(); //get the original elements, or the elements of the parent model
+            List<BlockElement> all = List.copyOf(this.getElements()); //get the original elements, or the elements of the parent model
             elements.clear();
             elements.addAll(all); //add the original elements to the model
             textureMap.put("marker", FULL_GROWN_CROP_MARKER_SPRITE);
             elements.addAll(FullGrownCropMarker$createMarkerTop(options)); //add the marker elements to the model
             FullGrownCropMarker.LOGGER.info("Added the marker to '{}' with {}", id, options);
+            this.FullGrownCropMarker$alreadyHasMarker = true;
         }
     }
 
