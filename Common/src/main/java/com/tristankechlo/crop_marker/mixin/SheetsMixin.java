@@ -19,7 +19,8 @@ public abstract class SheetsMixin {
         //dirty hack to add the marker texture to the block atlas
         Material material = ResourceLocationHelper.MATERIAL;
         $$0.accept(material);
-        FullGrownCropMarker.LOGGER.info("Added marker texture to TextureAtlas {}", material.atlasLocation());
+        $$0.accept(ResourceLocationHelper.MATERIAL_ANIMATED);
+        FullGrownCropMarker.LOGGER.info("Added marker textures to TextureAtlas {}", material.atlasLocation());
     }
 
 }

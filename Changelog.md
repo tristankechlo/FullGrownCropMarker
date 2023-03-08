@@ -3,7 +3,7 @@
 ## Version 1.18.2 - 1.2.0
 
 - fix invisible vanilla crops when using custom crop-models
-- 
+- implement simple marker animation
 
 ### Version 1.18.2 - 1.1.0
 

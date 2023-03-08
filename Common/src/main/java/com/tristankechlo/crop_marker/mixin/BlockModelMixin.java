@@ -1,5 +1,6 @@
 package com.tristankechlo.crop_marker.mixin;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Either;
 import com.mojang.math.Vector3f;
 import com.tristankechlo.crop_marker.FullGrownCropMarker;
@@ -31,6 +32,7 @@ import java.util.function.Function;
 public abstract class BlockModelMixin {
 
     private static final Either<Material, String> FULL_GROWN_CROP_MARKER_SPRITE = Either.left(ResourceLocationHelper.MATERIAL);
+    private static final Either<Material, String> FULL_GROWN_CROP_MARKER_SPRITE_ANIMATED = Either.left(ResourceLocationHelper.MATERIAL_ANIMATED);
     private boolean FullGrownCropMarker$alreadyHasMarker = false; // sometimes multiple states use the same model, prevent adding marker multiple times
 
     @Inject(at = @At("HEAD"), method = "bake(Lnet/minecraft/client/resources/model/ModelBakery;Lnet/minecraft/client/renderer/block/model/BlockModel;Ljava/util/function/Function;Lnet/minecraft/client/resources/model/ModelState;Lnet/minecraft/resources/ResourceLocation;Z)Lnet/minecraft/client/resources/model/BakedModel;")
@@ -46,27 +48,43 @@ public abstract class BlockModelMixin {
             elements.clear();
             elements.addAll(all); //add the original elements to the model
             textureMap.put("marker", FULL_GROWN_CROP_MARKER_SPRITE);
-            elements.addAll(FullGrownCropMarker$createMarkerTop(options)); //add the marker elements to the model
+            textureMap.put("animated_marker", FULL_GROWN_CROP_MARKER_SPRITE_ANIMATED);
+            elements.addAll(FullGrownCropMarker$createMarker(options)); //add the marker elements to the model
             FullGrownCropMarker.LOGGER.info("Added the marker to '{}' with {}", id, options);
             FullGrownCropMarker$alreadyHasMarker = true;
         }
     }
 
     //create the ModelElements needed for the marker
-    private static List<BlockElement> FullGrownCropMarker$createMarkerTop(MarkerOptions options) {
+    private static List<BlockElement> FullGrownCropMarker$createMarker(MarkerOptions options) {
         final float[] uvsSmall = options.color().getUvsSmall();
         final float[] uvsLarge = options.color().getUvsLarge();
         final int yOffset = 16 + options.yOffset();
-        final boolean animated = options.animated();
+        String texture = options.animated() ? "#animated_marker" : "#marker";
 
-        final BlockElementFace faceSmall = new BlockElementFace(Direction.UP, 0, "#marker", new BlockFaceUV(uvsSmall, 0));
-        final BlockElementFace faceLarge = new BlockElementFace(Direction.UP, 0, "#marker", new BlockFaceUV(uvsLarge, 0));
-        final BlockElementRotation rotation = new BlockElementRotation(new Vector3f(0, 0, 0), Direction.Axis.Y, 0, false);
+        List<BlockElement> markerDefault = FullGrownCropMarker$createMarker(texture, uvsSmall, uvsLarge, yOffset);
+
+        if (!options.animated()) {
+            return markerDefault;
+        }
+
+        final float[] uvsSmallAnimated = options.color().getUvsSmallAnimated();
+        final float[] uvsLargeAnimated = options.color().getUvsLargeAnimated();
+
+        List<BlockElement> markerAnimated = FullGrownCropMarker$createMarker(texture, uvsSmallAnimated, uvsLargeAnimated, 1 + yOffset);
+
+        return ImmutableList.<BlockElement>builder().addAll(markerDefault).addAll(markerAnimated).build();
+    }
+
+    private static List<BlockElement> FullGrownCropMarker$createMarker(String texture, float[] uvsSmall, float[] uvsLarge, int yOffset) {
+        final BlockElementFace faceSmall = new BlockElementFace(Direction.UP, 0, texture, new BlockFaceUV(uvsSmall, 0));
+        final BlockElementFace faceLarge = new BlockElementFace(Direction.UP, 0, texture, new BlockFaceUV(uvsLarge, 0));
+        final BlockElementRotation rotationElement = new BlockElementRotation(new Vector3f(0.5F, 0, 0.5f), Direction.Axis.Y, 0f, false);
 
         Map<Direction, BlockElementFace> facesCube = Arrays.stream(Direction.values()).collect(HashMap::new, (map, dir) -> map.put(dir, faceSmall), HashMap::putAll);
         Vector3f fromSmall = new Vector3f(7, 1 + yOffset, 7);
         Vector3f toSmall = new Vector3f(9, 3 + yOffset, 9);
-        BlockElement smallCube = new BlockElement(fromSmall, toSmall, facesCube, rotation, false);
+        BlockElement smallCube = new BlockElement(fromSmall, toSmall, facesCube, rotationElement, false);
 
         Map<Direction, BlockElementFace> facesCuboidTop = Arrays.stream(Direction.values())
                 .filter(dir -> dir.getAxis().isHorizontal())
@@ -75,7 +93,7 @@ public abstract class BlockModelMixin {
         facesCuboidTop.put(Direction.DOWN, faceSmall);
         Vector3f fromLarge = new Vector3f(7, 4 + yOffset, 7);
         Vector3f toLarge = new Vector3f(9, 9 + yOffset, 9);
-        BlockElement cuboidTop = new BlockElement(fromLarge, toLarge, facesCuboidTop, rotation, false);
+        BlockElement cuboidTop = new BlockElement(fromLarge, toLarge, facesCuboidTop, rotationElement, false);
 
         return List.of(smallCube, cuboidTop);
     }
