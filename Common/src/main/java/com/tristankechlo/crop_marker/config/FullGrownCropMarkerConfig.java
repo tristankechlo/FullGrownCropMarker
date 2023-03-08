@@ -6,7 +6,6 @@ import com.google.gson.reflect.TypeToken;
 import com.tristankechlo.crop_marker.FullGrownCropMarker;
 import com.tristankechlo.crop_marker.types.MarkerColor;
 import com.tristankechlo.crop_marker.types.MarkerOptions;
-import com.tristankechlo.crop_marker.types.MarkerPosition;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 
@@ -53,13 +52,13 @@ public final class FullGrownCropMarkerConfig {
 
     private static Map<ResourceLocation, MarkerOptions> createOptions() {
         Map<ResourceLocation, MarkerOptions> options = new HashMap<>();
-        options.put(getID("wheat_stage7"), new MarkerOptions(1, false, MarkerPosition.TOP, MarkerColor.YELLOW));
-        options.put(getID("carrots_stage3"), new MarkerOptions(-2, false, MarkerPosition.TOP, MarkerColor.ORANGE));
-        options.put(getID("beetroots_stage3"), new MarkerOptions(-4, false, MarkerPosition.TOP, MarkerColor.RED));
-        options.put(getID("potatoes_stage3"), new MarkerOptions(1, false, MarkerPosition.TOP, MarkerColor.GREEN));
-        options.put(getID("nether_wart_stage2"), new MarkerOptions(-1, false, MarkerPosition.TOP, MarkerColor.RED));
-        options.put(getID("sweet_berry_bush_stage2"), new MarkerOptions(2, false, MarkerPosition.TOP, MarkerColor.GREEN));
-        options.put(getID("sweet_berry_bush_stage3"), new MarkerOptions(2, false, MarkerPosition.TOP, MarkerColor.RED));
+        options.put(getID("wheat_stage7"), new MarkerOptions(1, false, true, MarkerColor.YELLOW));
+        options.put(getID("carrots_stage3"), new MarkerOptions(-2, false, true, MarkerColor.ORANGE));
+        options.put(getID("beetroots_stage3"), new MarkerOptions(-4, false, true, MarkerColor.RED));
+        options.put(getID("potatoes_stage3"), new MarkerOptions(1, false, true, MarkerColor.GREEN));
+        options.put(getID("nether_wart_stage2"), new MarkerOptions(-1, false, true, MarkerColor.RED));
+        options.put(getID("sweet_berry_bush_stage2"), new MarkerOptions(2, false, true, MarkerColor.GREEN));
+        options.put(getID("sweet_berry_bush_stage3"), new MarkerOptions(2, false, true, MarkerColor.RED));
         return options;
     }
 

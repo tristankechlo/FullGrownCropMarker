@@ -7,12 +7,12 @@ import net.minecraft.util.GsonHelper;
 
 import java.lang.reflect.Type;
 
-public record MarkerOptions(int yOffset, boolean animated, MarkerPosition position, MarkerColor color) {
+public record MarkerOptions(int yOffset, boolean animated, boolean hasMarker, MarkerColor color) {
 
-    public static final MarkerOptions DEFAULT = new MarkerOptions(0, false, MarkerPosition.TOP, MarkerColor.GREEN);
+    public static final MarkerOptions DEFAULT = new MarkerOptions(0, false, true, MarkerColor.GREEN);
     private static final String OFFSET = "offset";
     private static final String ANIMATED = "animated";
-    private static final String POSITION = "position";
+    private static final String HAS_MARKER = "hasMarker";
     private static final String COLOR = "color";
 
     public static MarkerOptions fromJson(JsonElement json) {
@@ -34,7 +34,7 @@ public record MarkerOptions(int yOffset, boolean animated, MarkerPosition positi
 
     @Override
     public String toString() {
-        return "MarkerOptions{" + "yOffset=" + yOffset + ", animated=" + animated + ", position=" + position + ", color=" + color + '}';
+        return "MarkerOptions{" + "yOffset=" + yOffset + ", animated=" + animated + ", hasMarker=" + hasMarker + ", color=" + color + '}';
     }
 
     public static class Serializer implements JsonSerializer<MarkerOptions>, JsonDeserializer<MarkerOptions> {
@@ -44,7 +44,7 @@ public record MarkerOptions(int yOffset, boolean animated, MarkerPosition positi
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty(OFFSET, src.yOffset());
             jsonObject.addProperty(ANIMATED, src.animated());
-            jsonObject.addProperty(POSITION, src.position().getSerializedName());
+            jsonObject.addProperty(HAS_MARKER, src.hasMarker());
             jsonObject.addProperty(COLOR, src.color().getSerializedName());
             return jsonObject;
         }
@@ -54,14 +54,9 @@ public record MarkerOptions(int yOffset, boolean animated, MarkerPosition positi
             JsonObject json = jsonElement.getAsJsonObject();
             int yOffset = GsonHelper.getAsInt(json, OFFSET, 0);
             boolean animatedMarker = GsonHelper.getAsBoolean(json, ANIMATED, false);
-            MarkerPosition position = deserializePosition(json);
+            boolean hasMarker = GsonHelper.getAsBoolean(json, HAS_MARKER, true);
             MarkerColor color = deserializeColor(json);
-            return new MarkerOptions(yOffset, animatedMarker, position, color);
-        }
-
-        private MarkerPosition deserializePosition(JsonObject object) {
-            String position = GsonHelper.getAsString(object, POSITION, MarkerPosition.TOP.getSerializedName());
-            return MarkerPosition.fromString(position.toLowerCase());
+            return new MarkerOptions(yOffset, animatedMarker, hasMarker, color);
         }
 
         private MarkerColor deserializeColor(JsonObject object) {
@@ -70,6 +65,5 @@ public record MarkerOptions(int yOffset, boolean animated, MarkerPosition positi
         }
 
     }
-
 
 }

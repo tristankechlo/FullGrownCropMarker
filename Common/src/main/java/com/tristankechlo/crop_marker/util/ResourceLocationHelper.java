@@ -1,12 +1,18 @@
 package com.tristankechlo.crop_marker.util;
 
-import com.tristankechlo.crop_marker.types.MarkerPosition;
+import net.minecraft.resources.ResourceLocation;
 
 public interface ResourceLocationHelper {
 
+    static boolean FullGrownCropMarker$shouldHaveMarker(ResourceLocation id) {
+        if (id instanceof ResourceLocationHelper) {
+            return ((ResourceLocationHelper) id).FullGrownCropMarker$shouldHaveMarker();
+        }
+        return false;
+    }
 
-    void FullGrownCropMarker$setMarkerPosition(MarkerPosition position);
+    void FullGrownCropMarker$setShouldHaveMarker(boolean hasMarker);
 
-    MarkerPosition FullGrownCropMarker$getMarkerPosition();
+    boolean FullGrownCropMarker$shouldHaveMarker();
 
 }
