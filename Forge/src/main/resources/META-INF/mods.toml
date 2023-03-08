@@ -5,7 +5,7 @@ showAsResourcePack = false
 
 [[mods]]
 modId = "crop_marker"
-version = "1.19-1.0.0"
+version = "1.19-1.1.0"
 displayName = "FullGrownCropMarker"
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/full-grown-crop-marker"
 #logoFile="examplemod.png"
