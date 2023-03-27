@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 1.19.4 - 1.2.0
+
+- port to 1.19.4
+
 ## Version 1.19.3 - 1.2.0
 
 - fix invisible vanilla crops when using custom crop-models
