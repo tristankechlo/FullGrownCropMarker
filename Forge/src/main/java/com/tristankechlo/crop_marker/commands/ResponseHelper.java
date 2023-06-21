@@ -41,7 +41,7 @@ public final class ResponseHelper {
 
     public static void sendMessage(CommandSourceStack source, Component message) {
         MutableComponent start = start().append(message);
-        source.sendSuccess(start, false);
+        source.sendSuccess(() -> start, false);
     }
 
     public static MutableComponent clickableConfig() {
