@@ -29,7 +29,7 @@ public abstract class BlockModelShaperMixin {
 
     private static boolean FullGrownCropMarker$shouldHaveMarker(Block block, BlockState state) {
         if (block instanceof CropBlock) {
-            return FullGrownCropMarker$isMaxAge(state, ((CropBlockAccessor) block).getAgeProp(), ((CropBlock) block).getMaxAge());
+            return FullGrownCropMarker$isMaxAge(state, ((CropBlockAccessor) block).FullGrownCropMarker$getAgeProp(), ((CropBlock) block).getMaxAge());
         }
         if (block instanceof NetherWartBlock) {
             return FullGrownCropMarker$isMaxAge(state, NetherWartBlock.AGE, NetherWartBlock.MAX_AGE);
