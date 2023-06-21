@@ -1,11 +1,11 @@
 modLoader = "javafml"
-loaderVersion = "[44,)"
+loaderVersion = "[46,)"
 license = "CC BY-NC-ND 4.0"
 showAsResourcePack = false
 
 [[mods]]
 modId = "crop_marker"
-version = "1.19.4-1.2.0"
+version = "${version}"
 displayName = "FullGrownCropMarker"
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/full-grown-crop-marker"
 #logoFile="examplemod.png"
@@ -17,13 +17,13 @@ displayTest = "IGNORE_ALL_VERSION" #client only mod
 [[dependencies.crop_marker]]
 modId = "forge"
 mandatory = true
-versionRange = "[44.1.0,)"
+versionRange = "[46,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.crop_marker]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19.3,1.20)"
+versionRange = "[1.20,1.21)"
 ordering = "NONE"
 side = "BOTH"

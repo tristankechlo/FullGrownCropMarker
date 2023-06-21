@@ -9,7 +9,8 @@
     ],
     "contact": {
         "sources": "https://github.com/tristankechlo/FullGrownCropMarker",
-        "issues": "https://github.com/tristankechlo/FullGrownCropMarker/issues"
+        "issues": "https://github.com/tristankechlo/FullGrownCropMarker/issues",
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/full-grown-crop-marker"
     },
     "license": "CC BY-NC-ND 4.0",
     "icon": "assets/crop_marker/icon.png",
@@ -28,7 +29,17 @@
     "depends": {
         "fabricloader": ">=0.14",
         "fabric-api": "*",
-        "minecraft": ">=1.19.3",
+        "minecraft": ">=1.20",
         "java": ">=17"
+    },
+    "custom": {
+        "modmenu": {
+            "links": {
+                "modmenu.discord": "https://discord.gg/bhUaWhq",
+                "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/full-grown-crop-marker",
+                "modmenu.modrinth": "https://modrinth.com/mod/full-grown-crop-marker",
+                "modmenu.wiki": "https://github.com/tristankechlo/FullGrownCropMarker/wiki"
+            }
+        }
     }
 }
