@@ -2,6 +2,7 @@ modLoader = "javafml"
 loaderVersion = "[46,)"
 license = "CC BY-NC-ND 4.0"
 showAsResourcePack = false
+clientSideOnly=true # stop loeading mod on servers
 
 [[mods]]
 modId = "crop_marker"
