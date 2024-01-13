@@ -1,0 +1,32 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+license = "CC BY-NC-ND 4.0"
+showAsResourcePack = false
+
+[[mods]]
+modId = "crop_marker"
+version = "${version}"
+displayName = "FullGrownCropMarker"
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/full-grown-crop-marker"
+#logoFile="examplemod.png"
+#credits=""
+authors = "Buecher_wurm"
+description = '''Adds a little marker over all crops that are at their maximum age!'''
+displayTest = "IGNORE_ALL_VERSION" #client only mod
+
+[[mixins]]
+config = "crop_marker.mixins.json"
+
+[[dependencies.crop_marker]]
+modId = "neoforge"
+type="required"
+versionRange = "[20.4,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.crop_marker]]
+modId = "minecraft"
+type="required"
+versionRange = "[1.20.4,1.21)"
+ordering = "NONE"
+side = "BOTH"
