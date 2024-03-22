@@ -1,4 +1,7 @@
-# Full Grown Crop Marker [![Curseforge](http://cf.way2muchnoise.eu/full_834457_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/full-grown-crop-marker) [![Discord](https://img.shields.io/discord/639540436524072970?color=0a48c4&label=%20&logo=discord&logoColor=FFF)](https://discord.gg/bhUaWhq)
+# Full Grown Crop Marker
+[![Curseforge](https://img.shields.io/curseforge/dt/834457?style=for-the-badge&logo=curseforge&color=e05d44)](https://www.curseforge.com/minecraft/mc-mods/full-grown-crop-marker)&nbsp;
+[![Modrinth](https://img.shields.io/modrinth/dt/zB8NzHon?style=for-the-badge&logo=modrinth&color=e05d44)](https://modrinth.com/mod/full-grown-crop-marker)&nbsp;
+[![Discord](https://img.shields.io/discord/639540436524072970?style=for-the-badge&logo=discord&logoColor=fff&label=%20&color=0a48c4)](https://discord.gg/bhUaWhq)
 
 Adds a little marker over all crops that are at their maximum age!
 
