@@ -1,9 +1,10 @@
 subprojects {
 
     apply plugin: 'java'
-    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+    java.toolchain.languageVersion = JavaLanguageVersion.of(java_version)
 
     jar {
+        from rootProject.file('LICENSE')
         manifest {
             attributes([
                     'Specification-Title'     : mod_name,
