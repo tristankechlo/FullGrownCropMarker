@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '[6.0,6.2)', changing: true
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
@@ -14,9 +14,10 @@ apply plugin: 'java'
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
-version = "${minecraft_version}-${mod_version}"
-archivesBaseName = "${mod_file_name}-forge"
-
+base {
+    version = "${minecraft_version}-${mod_version}"
+    archivesBaseName = "${mod_file_name}-forge"
+}
 
 mixin {
     add sourceSets.main, "${mod_id}.refmap.json"
@@ -62,6 +63,9 @@ dependencies {
     compileOnly project(":common")
     implementation 'org.spongepowered:mixin:0.8.4:processor'
     annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
+
+    compileOnly group: 'com.google.auto.service', name: 'auto-service', version: auto_service_version
+    annotationProcessor group: 'com.google.auto.service', name: 'auto-service', version: auto_service_version
 }
 
 tasks.withType(JavaCompile) {
@@ -70,10 +74,6 @@ tasks.withType(JavaCompile) {
 
 processResources {
     from project(":common").sourceSets.main.resources
-
-    filesMatching('*.mixins.json') {
-        expand "refmap_target": "${mod_id}."
-    }
 }
 
 jar.finalizedBy('reobfJar')
