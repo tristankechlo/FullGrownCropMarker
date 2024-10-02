@@ -7,6 +7,12 @@ base {
     archivesBaseName = "${mod_file_name}-fabric"
 }
 
+repositories {
+    maven {
+        url "https://maven.terraformersmc.com/releases"
+    }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()
