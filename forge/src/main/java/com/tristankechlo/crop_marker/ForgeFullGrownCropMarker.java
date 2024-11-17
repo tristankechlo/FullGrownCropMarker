@@ -4,20 +4,23 @@ import com.tristankechlo.crop_marker.commands.CropMarkerCommand;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(value = FullGrownCropMarker.MOD_ID)
 public final class ForgeFullGrownCropMarker {
 
     public ForgeFullGrownCropMarker() {
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> this::onClientStarting);
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> this.onClientStarting(FMLJavaModLoadingContext.get().getModEventBus()));
         DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> this::onServerStarting);
     }
 
-    private void onClientStarting() {
+    private void onClientStarting(IEventBus bus) {
         FullGrownCropMarker.init();
-
+        bus.addListener(ForgeClientEvents::onClientSetup);
+        bus.addListener(ForgeClientEvents::onRegisterLayerDefinitions);
         MinecraftForge.EVENT_BUS.addListener(this::onClientCommands);
     }
 

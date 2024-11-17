@@ -1,8 +1,8 @@
 # Changelog
 
-### Version 1.20.6 - 1.2.2
+### Version 1.21 - 1.2.2
 
-- port to 1.20.6
+- port to 1.21
 
 ### Version 1.20.4 - 1.2.1
 

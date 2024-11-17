@@ -4,13 +4,8 @@
     "package": "com.tristankechlo.crop_marker.mixin",
     "compatibilityLevel": "JAVA_17",
     "mixins": [
-        "CropBlockAccessor",
-        "ResourceLocationMixin"
     ],
     "client": [
-        "BlockModelMixin",
-        "BlockModelShaperMixin",
-        "MultiVariantMixin"
     ],
     "server": [
     ],
