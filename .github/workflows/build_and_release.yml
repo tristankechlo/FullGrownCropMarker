@@ -13,8 +13,8 @@ env:
   MODRINTH_FEATURED: false # if this version should be featured on modrinth
   DISCORD_COLOR: 15216972
   DISCORD_MENTION: "<@&1133751307086352514>"
-  DISCORD_TITLE: "New version for FullGrownCropMarker just released :exclamation:"
-  DISCORD_THUMBNAIL: "https://cdn.modrinth.com/data/zB8NzHon/dabe8ce18acbed2f0f33c9d2b02d139fd3f77642_96.webp"
+  DISCORD_TITLE: "New version for FullGrownCropMarker released :exclamation:"
+  DISCORD_THUMBNAIL: "https://cdn.modrinth.com/data/zB8NzHon/images/448876006093e0122ac400107346203c5bd7401f.png"
 
 jobs:
   prepare:
