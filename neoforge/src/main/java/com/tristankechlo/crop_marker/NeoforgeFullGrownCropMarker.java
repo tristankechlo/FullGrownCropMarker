@@ -2,18 +2,21 @@ package com.tristankechlo.crop_marker;
 
 import com.tristankechlo.crop_marker.commands.CropMarkerCommand;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
 @Mod(value = FullGrownCropMarker.MOD_ID)
 public final class NeoforgeFullGrownCropMarker {
 
-    @SuppressWarnings("removal")
     public NeoforgeFullGrownCropMarker() {
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> this::onClientStarting);
-        DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> this::onServerStarting);
+        if (FMLLoader.getDist() == Dist.CLIENT) {
+            this.onClientStarting();
+        }
+        if (FMLLoader.getDist() == Dist.DEDICATED_SERVER) {
+            this.onServerStarting();
+        }
     }
 
     private void onClientStarting() {

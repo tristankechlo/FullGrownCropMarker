@@ -1,5 +1,6 @@
 package com.tristankechlo.crop_marker.types;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.util.StringRepresentable;
 
 public enum MarkerColor implements StringRepresentable {
@@ -16,7 +17,7 @@ public enum MarkerColor implements StringRepresentable {
     private final float[] uvsLarge;
     private final float[] uvsSmallAnimated;
     private final float[] uvsLargeAnimated;
-    public static final StringRepresentable.EnumCodec<MarkerColor> CODEC = StringRepresentable.fromEnum(MarkerColor::values);
+    public static final Codec<MarkerColor> CODEC = StringRepresentable.fromEnum(MarkerColor::values);
 
     MarkerColor(String name, float x1, float y1, float x2, float y2) {
         this.name = name;
@@ -50,10 +51,6 @@ public enum MarkerColor implements StringRepresentable {
     @Override
     public String getSerializedName() {
         return this.name;
-    }
-
-    public static MarkerColor fromString(String string) {
-        return CODEC.byName(string, GREEN);
     }
 
 }

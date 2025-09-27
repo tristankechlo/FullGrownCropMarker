@@ -26,6 +26,7 @@
             "environment": "client"
         }
     ],
+    "accessWidener" : "crop_marker.accesswidener",
     "depends": {
         "fabricloader": ">=${fabric_loader_min}",
         "fabric": "*",

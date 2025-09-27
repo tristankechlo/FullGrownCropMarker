@@ -1,5 +1,6 @@
 package com.tristankechlo.crop_marker.mixin;
 
+import com.tristankechlo.crop_marker.FullGrownCropMarker;
 import com.tristankechlo.crop_marker.util.ResourceLocationHelper;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -11,6 +12,7 @@ import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -20,13 +22,17 @@ public abstract class BlockModelShaperMixin {
 
     @Inject(at = @At("RETURN"),
             method = "stateToModelLocation(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/client/resources/model/ModelResourceLocation;")
-    private static void FullGrownCropMarker$getModelId(ResourceLocation $$0, BlockState state, CallbackInfoReturnable<ModelResourceLocation> cir) {
+    private static void FullGrownCropMarker$getModelId(ResourceLocation id, BlockState state, CallbackInfoReturnable<ModelResourceLocation> cir) {
         Block block = state.getBlock();
         boolean shouldHaveMarker = FullGrownCropMarker$shouldHaveMarker(block, state);
         ModelResourceLocation modelIdentifier = cir.getReturnValue();
-        ((ResourceLocationHelper) modelIdentifier).FullGrownCropMarker$setShouldHaveMarker(shouldHaveMarker);
+        ((ResourceLocationHelper) (Object) modelIdentifier).FullGrownCropMarker$setShouldHaveMarker(shouldHaveMarker);
+        if (shouldHaveMarker) {
+            FullGrownCropMarker.LOGGER.info("Marking {}", modelIdentifier);
+        }
     }
 
+    @Unique
     private static boolean FullGrownCropMarker$shouldHaveMarker(Block block, BlockState state) {
         if (block instanceof CropBlock) {
             return FullGrownCropMarker$isMaxAge(state, ((CropBlockAccessor) block).FullGrownCropMarker$getAgeProp(), ((CropBlock) block).getMaxAge());
@@ -42,6 +48,7 @@ public abstract class BlockModelShaperMixin {
         return false;
     }
 
+    @Unique
     private static boolean FullGrownCropMarker$isMaxAge(BlockState state, Property<Integer> property, int maxAge) {
         return state.getValue(property) == maxAge;
     }

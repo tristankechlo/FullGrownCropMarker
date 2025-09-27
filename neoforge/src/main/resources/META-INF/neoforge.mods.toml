@@ -30,3 +30,6 @@ showAsResourcePack = false
     versionRange = "${version_range}"
     ordering = "NONE"
     side = "BOTH"
+
+[[accessTransformers]]
+    file = "META-INF/accesstransformer.cfg"

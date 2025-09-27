@@ -5,6 +5,7 @@ import com.mojang.datafixers.util.Either;
 import com.tristankechlo.crop_marker.FullGrownCropMarker;
 import com.tristankechlo.crop_marker.config.FullGrownCropMarkerConfig;
 import com.tristankechlo.crop_marker.types.MarkerOptions;
+import com.tristankechlo.crop_marker.util.ModelBakerAddon;
 import com.tristankechlo.crop_marker.util.ResourceLocationHelper;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -19,6 +20,7 @@ import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -31,33 +33,41 @@ import java.util.function.Function;
 @Mixin(BlockModel.class)
 public abstract class BlockModelMixin {
 
-    private static final ResourceLocation FULL_GROWN_CROP_MARKER_TEXTURE = new ResourceLocation(FullGrownCropMarker.MOD_ID, "block/marker");
-    private static final ResourceLocation FULL_GROWN_CROP_MARKER_TEXTURE_ANIMATED = new ResourceLocation(FullGrownCropMarker.MOD_ID, "block/marker_animated");
+    @Unique
+    private static final ResourceLocation FULL_GROWN_CROP_MARKER_TEXTURE = ResourceLocation.fromNamespaceAndPath(FullGrownCropMarker.MOD_ID, "block/marker");
+    @Unique
+    private static final ResourceLocation FULL_GROWN_CROP_MARKER_TEXTURE_ANIMATED = ResourceLocation.fromNamespaceAndPath(FullGrownCropMarker.MOD_ID, "block/marker_animated");
+    @Unique
     private static final Either<Material, String> FULL_GROWN_CROP_MARKER_SPRITE = Either.left(new Material(InventoryMenu.BLOCK_ATLAS, FULL_GROWN_CROP_MARKER_TEXTURE));
+    @Unique
     private static final Either<Material, String> FULL_GROWN_CROP_MARKER_SPRITE_ANIMATED = Either.left(new Material(InventoryMenu.BLOCK_ATLAS, FULL_GROWN_CROP_MARKER_TEXTURE_ANIMATED));
-    private boolean FullGrownCropMarker$alreadyHasMarker = false; // sometimes multiple states use the same model, prevent adding marker multiple times
 
-    @Inject(at = @At("HEAD"), method = "bake(Lnet/minecraft/client/resources/model/ModelBaker;Lnet/minecraft/client/renderer/block/model/BlockModel;Ljava/util/function/Function;Lnet/minecraft/client/resources/model/ModelState;Lnet/minecraft/resources/ResourceLocation;Z)Lnet/minecraft/client/resources/model/BakedModel;")
-    private void FullGrownCropMarker$bake(ModelBaker $$0, BlockModel $$1, Function<Material, TextureAtlasSprite> $$2, ModelState $$3, ResourceLocation id, boolean $$5, CallbackInfoReturnable<BakedModel> cir) {
-        boolean shouldHaveMarker = ResourceLocationHelper.FullGrownCropMarker$shouldHaveMarker(id);
-        if (shouldHaveMarker && !this.FullGrownCropMarker$alreadyHasMarker) {
-            MarkerOptions options = FullGrownCropMarkerConfig.getOptions(id);
-            if (!options.hasMarker()) {
-                FullGrownCropMarker.LOGGER.info("Skipped adding the marker to '{}' with {}", id, options);
-                return;
-            }
-            List<BlockElement> all = List.copyOf(this.getElements()); //get the original elements, or the elements of the parent model
-            elements.clear();
-            elements.addAll(all); //add the original elements to the model
-            textureMap.put("marker", FULL_GROWN_CROP_MARKER_SPRITE);
-            textureMap.put("animated_marker", FULL_GROWN_CROP_MARKER_SPRITE_ANIMATED);
-            elements.addAll(FullGrownCropMarker$createMarker(options)); //add the marker elements to the model
-            FullGrownCropMarker.LOGGER.info("Added the marker to '{}' with {}", id, options);
-            this.FullGrownCropMarker$alreadyHasMarker = true;
+    @Inject(at = @At("HEAD"), method = "bake(Lnet/minecraft/client/resources/model/ModelBaker;Lnet/minecraft/client/renderer/block/model/BlockModel;Ljava/util/function/Function;Lnet/minecraft/client/resources/model/ModelState;Z)Lnet/minecraft/client/resources/model/BakedModel;")
+    private void FullGrownCropMarker$onBake(ModelBaker baker, BlockModel model, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, boolean $$4, CallbackInfoReturnable<BakedModel> cir) {
+        boolean shouldHaveMarker = ((ResourceLocationHelper) (Object) ((ModelBakerAddon) baker).FullGrownCropMarker$id()).FullGrownCropMarker$shouldHaveMarker();
+        if (shouldHaveMarker) {
+            this.FullGrownCropMarker$addMarker();
         }
     }
 
-    //create the ModelElements needed for the marker
+    @Unique
+    private void FullGrownCropMarker$addMarker() {
+        ResourceLocation id = ResourceLocation.parse(this.name);
+        MarkerOptions options = FullGrownCropMarkerConfig.getOptions(id);
+        if (!options.hasMarker()) {
+            FullGrownCropMarker.LOGGER.info("Skipped adding the marker to '{}' with {}", id, options);
+            return;
+        }
+        List<BlockElement> all = List.copyOf(this.getElements()); //get the original elements, or the elements of the parent model
+        elements.clear();
+        elements.addAll(all); //add the original elements to the model
+        textureMap.put("marker", FULL_GROWN_CROP_MARKER_SPRITE);
+        textureMap.put("animated_marker", FULL_GROWN_CROP_MARKER_SPRITE_ANIMATED);
+        elements.addAll(FullGrownCropMarker$createMarker(options)); //add the marker elements to the model
+        FullGrownCropMarker.LOGGER.info("Added the marker to '{}' with {}", id, options);
+    }
+
+    @Unique
     private static List<BlockElement> FullGrownCropMarker$createMarker(MarkerOptions options) {
         final float[] uvsSmall = options.color().getUvsSmall();
         final float[] uvsLarge = options.color().getUvsLarge();
@@ -78,6 +88,7 @@ public abstract class BlockModelMixin {
         return ImmutableList.<BlockElement>builder().addAll(markerDefault).addAll(markerAnimated).build();
     }
 
+    @Unique
     private static List<BlockElement> FullGrownCropMarker$createMarker(String texture, float[] uvsSmall, float[] uvsLarge, int yOffset) {
         final BlockElementFace faceSmall = new BlockElementFace(Direction.UP, 0, texture, new BlockFaceUV(uvsSmall, 0));
         final BlockElementFace faceLarge = new BlockElementFace(Direction.UP, 0, texture, new BlockFaceUV(uvsLarge, 0));
@@ -110,5 +121,8 @@ public abstract class BlockModelMixin {
 
     @Shadow
     public abstract List<BlockElement> getElements();
+
+    @Shadow
+    public String name;
 
 }
