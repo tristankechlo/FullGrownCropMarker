@@ -42,8 +42,8 @@ public abstract class BlockModelMixin {
     @Unique
     private static final Either<Material, String> FULL_GROWN_CROP_MARKER_SPRITE_ANIMATED = Either.left(new Material(InventoryMenu.BLOCK_ATLAS, FULL_GROWN_CROP_MARKER_TEXTURE_ANIMATED));
 
-    @Inject(at = @At("HEAD"), method = "bake(Lnet/minecraft/client/resources/model/ModelBaker;Lnet/minecraft/client/renderer/block/model/BlockModel;Ljava/util/function/Function;Lnet/minecraft/client/resources/model/ModelState;Z)Lnet/minecraft/client/resources/model/BakedModel;")
-    private void FullGrownCropMarker$onBake(ModelBaker baker, BlockModel model, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, boolean $$4, CallbackInfoReturnable<BakedModel> cir) {
+    @Inject(at = @At("HEAD"), method = "bake(Lnet/minecraft/client/resources/model/ModelBaker;Ljava/util/function/Function;Lnet/minecraft/client/resources/model/ModelState;)Lnet/minecraft/client/resources/model/BakedModel;")
+    private void FullGrownCropMarker$onBake(ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, CallbackInfoReturnable<BakedModel> cir) {
         boolean shouldHaveMarker = ((ResourceLocationHelper) (Object) ((ModelBakerAddon) baker).FullGrownCropMarker$id()).FullGrownCropMarker$shouldHaveMarker();
         if (shouldHaveMarker) {
             this.FullGrownCropMarker$addMarker();
@@ -97,7 +97,7 @@ public abstract class BlockModelMixin {
         Map<Direction, BlockElementFace> facesCube = Direction.stream().collect(HashMap::new, (map, dir) -> map.put(dir, faceSmall), HashMap::putAll);
         Vector3f fromSmall = new Vector3f(7, 1 + yOffset, 7);
         Vector3f toSmall = new Vector3f(9, 3 + yOffset, 9);
-        BlockElement smallCube = new BlockElement(fromSmall, toSmall, facesCube, rotationElement, false);
+        BlockElement smallCube = new BlockElement(fromSmall, toSmall, facesCube, rotationElement, false, 0);
 
         Map<Direction, BlockElementFace> facesCuboidTop = Direction.stream()
                 .filter(dir -> dir.getAxis().isHorizontal())
@@ -106,7 +106,7 @@ public abstract class BlockModelMixin {
         facesCuboidTop.put(Direction.DOWN, faceSmall);
         Vector3f fromLarge = new Vector3f(7, 4 + yOffset, 7);
         Vector3f toLarge = new Vector3f(9, 9 + yOffset, 9);
-        BlockElement cuboidTop = new BlockElement(fromLarge, toLarge, facesCuboidTop, rotationElement, false);
+        BlockElement cuboidTop = new BlockElement(fromLarge, toLarge, facesCuboidTop, rotationElement, false, 0);
 
         return List.of(smallCube, cuboidTop);
     }
