@@ -82,7 +82,7 @@ jobs:
         uses: tristankechlo/publish-mc-mod@v2.0.0
         if: ${{ contains(github.event.release.name, '[RELEASE]') }}
         with:
-          mc-version: 1.21.1
+          mc-version: ${{ needs.prepare.outputs.mc-version }}
           mod-version: ${{ needs.prepare.outputs.mod-version }}
           curseforge-id: ${{ env.CURSEFORGE_ID }}
           modrinth-id: ${{ env.MODRINTH_ID }}
