@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.18.2 - 1.2.3
+
+- show mod icon for Forge
+
 ## Version 1.18.2 - 1.2.0
 
 - fix invisible vanilla crops when using custom crop-models
