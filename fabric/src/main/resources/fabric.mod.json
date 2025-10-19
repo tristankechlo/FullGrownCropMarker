@@ -12,7 +12,7 @@
         "issues": "https://github.com/tristankechlo/FullGrownCropMarker/issues"
     },
     "license": "CC BY-NC-ND 4.0",
-    "icon": "icon.png",
+    "icon": "pack.png",
     "environment": "client",
     "entrypoints": {
         "client": [
