@@ -44,6 +44,9 @@ public abstract class BlockModelMixin {
 
     @Inject(at = @At("HEAD"), method = "bake(Lnet/minecraft/client/resources/model/ModelBaker;Ljava/util/function/Function;Lnet/minecraft/client/resources/model/ModelState;)Lnet/minecraft/client/resources/model/BakedModel;")
     private void FullGrownCropMarker$onBake(ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, CallbackInfoReturnable<BakedModel> cir) {
+        if (!(baker instanceof ModelBakerAddon)) {
+            return;
+        }
         boolean shouldHaveMarker = ((ResourceLocationHelper) (Object) ((ModelBakerAddon) baker).FullGrownCropMarker$id()).FullGrownCropMarker$shouldHaveMarker();
         if (shouldHaveMarker) {
             this.FullGrownCropMarker$addMarker();

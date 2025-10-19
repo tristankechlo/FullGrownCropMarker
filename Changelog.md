@@ -1,6 +1,10 @@
 # Changelog
 
 ### Version 1.21.3 - 1.2.2
+## Version 1.21.3 - 1.2.3
+
+- fix rendering issue with anvils from `EasyAnvils` ([#5](https://github.com/tristankechlo/FullGrownCropMarker/issues/5))
+
 
 - port to 1.21.3
 
