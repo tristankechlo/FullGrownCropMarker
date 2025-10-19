@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.20.4 -1.2.3
+
+- show mod icon for Forge and NeoForge
+
 ### Version 1.20.4 - 1.2.1
 
 - slightly changed config handling
