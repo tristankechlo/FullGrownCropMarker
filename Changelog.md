@@ -3,6 +3,7 @@
 ### Version 1.21.1 - 1.2.3
 
 - fix rendering issue with anvils from `EasyAnvils` ([#5](https://github.com/tristankechlo/FullGrownCropMarker/issues/5))
+- show mod icon for Forge and NeoForge
 
 ### Version 1.21.1 - 1.2.2
 
