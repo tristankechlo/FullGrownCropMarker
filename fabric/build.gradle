@@ -26,6 +26,7 @@ dependencies {
 }
 
 loom {
+    mixin.defaultRefmapName = "crop_marker.refmap.json"
     runs {
         client {
             client()
